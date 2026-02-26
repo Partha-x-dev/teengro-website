@@ -51,7 +51,7 @@ function Navbar() {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/how-it-works">How It Works</Link></li>
         <li><Link to="/categories">Categories</Link></li>
-        <li><Link to="/team"><strong>Team</strong></Link></li>
+        <li><Link to="/team">Team</Link></li>
         <li><Link to="/about">About Us</Link></li>
       </ul>
 
@@ -102,7 +102,7 @@ function Footer() {
             <li><Link to="/categories">Browse Projects</Link></li>
             <li><Link to="/how-it-works">How It Works</Link></li>
             <li><Link to="/categories">Categories</Link></li>
-            <li><a href="#">Leaderboard</a></li>
+            <li><a href="/about">Leaderboard</a></li>
           </ul>
         </div>
         <div>
@@ -110,26 +110,26 @@ function Footer() {
           <ul className="footer-links">
             <li><Link to="/team">Our Team</Link></li>
             <li><Link to="/about">About Us</Link></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="/about">Careers</a></li>
+            <li><a href="/about">Blog</a></li>
           </ul>
         </div>
         <div>
           <div className="footer-col-title">Support</div>
           <ul className="footer-links">
-            <li><a href="#">Help Center</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Use</a></li>
+            <li><a href="/about">Help Center</a></li>
+            <li><a href="/about">Contact</a></li>
+            <li><a href="/about">Privacy Policy</a></li>
+            <li><a href="/about">Terms of Use</a></li>
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
         <span>© 2025 TéenGro. All rights reserved.</span>
         <div className="footer-bottom-links">
-          <a href="#">Twitter</a>
-          <a href="#">Instagram</a>
-          <a href="#">LinkedIn</a>
+          <a href="/about">Twitter</a>
+          <a href="/about">Instagram</a>
+          <a href="/about">LinkedIn</a>
         </div>
       </div>
     </footer>

@@ -143,7 +143,7 @@ export default function Signup() {
                 <input type="password" name="confirmPassword" placeholder="Re-enter your password" value={form.confirmPassword} onChange={handleChange} className="form-input" />
               </div>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '12px', lineHeight: '1.5' }}>
-                By signing up, you agree to our <a href="#" style={{ color: 'var(--primary)' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--primary)' }}>Privacy Policy</a>.
+                By signing up, you agree to our <Link to="/about" style={{ color: 'var(--primary)' }}>Terms of Service</Link> and <Link to="/about" style={{ color: 'var(--primary)' }}>Privacy Policy</Link>.
                 {form.role === 'teen' && parseInt(form.age) < 18 && ' Parental consent will be required.'}
               </p>
               <div style={{ display: 'flex', gap: '12px' }}>

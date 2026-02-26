@@ -1,112 +1,221 @@
 import React, { useEffect, useRef } from 'react';
 
+// Scroll animation hook
 function useFadeIn() {
   const ref = useRef(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
       { threshold: 0.12 }
     );
-    const els = ref.current?.querySelectorAll('.fade-in');
-    els?.forEach((el) => observer.observe(el));
+    const elements = ref.current?.querySelectorAll('.fade-in');
+    elements?.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
   return ref;
 }
 
-const teamMembers = [
+const projects = [
+  { icon: '✍️', color: '#FFE8D6', name: 'Blog Writing', category: 'Content Creation', earn: '₹500' },
+  { icon: '📱', color: '#D6F5EE', name: 'App Testing', category: 'Tech & Testing', earn: '₹300' },
+  { icon: '📊', color: '#E8D6FF', name: 'Market Survey', category: 'Research', earn: '₹200' },
+  { icon: '🎨', color: '#D6E8FF', name: 'Logo Design', category: 'Design', earn: '₹800' },
+];
+
+const categories = [
+  { icon: '✍️', name: 'Content Writing', count: '120+ projects' },
+  { icon: '📱', name: 'Social Media', count: '85+ projects' },
+  { icon: '🎨', name: 'Graphic Design', count: '60+ projects' },
+  { icon: '🔬', name: 'Research', count: '95+ projects' },
+  { icon: '💻', name: 'App Testing', count: '45+ projects' },
+  { icon: '🎤', name: 'Voice Over', count: '30+ projects' },
+  { icon: '📸', name: 'Photography', count: '25+ projects' },
+  { icon: '🧮', name: 'Data Entry', count: '110+ projects' },
+];
+
+const testimonials = [
   {
-    name: 'Parth Sharma',
-    role: 'Founder & CEO',
-    bio: 'IIM Ahmedabad alumnus with a passion for youth empowerment. Previously led product at two edtech unicorns. Believes every teenager deserves financial independence.',
-    icon: '👨‍💼',
+    stars: '★★★★★',
+    text: 'I earned my first ₹2,000 in just two weeks while preparing for my boards! The projects are super flexible and the companies are legit.',
+    name: 'Ananya S.',
+    role: 'Class 12 Student, Mumbai',
     color: '#FF6B35',
+    initials: 'A',
   },
   {
-    name: 'Riya Patel',
-    role: 'Chief Technology Officer',
-    bio: 'Ex-Flipkart engineer with 8+ years in scalable platforms. Built TéenGro’s core matching algorithm that connects teens with the perfect projects.',
-    icon: '💻',
+    stars: '★★★★★',
+    text: 'TéenGro changed how I see work. I got a certificate from a real company and it helped me in my college applications. This is gold!',
+    name: 'Rohan K.',
+    role: 'First Year, Delhi University',
     color: '#06D6A0',
+    initials: 'R',
   },
   {
-    name: 'Arjun Mehta',
-    role: 'Head of Partnerships',
-    bio: 'Forged relationships with 200+ brands including Fortune 500 companies. Shark Tank pitch strategist. Loves cricket and cold brew coffee.',
-    icon: '🤝',
+    stars: '★★★★★',
+    text: 'As a parent, I was skeptical at first. But watching my daughter build skills, earn money, and grow in confidence has been incredible.',
+    name: 'Priya M.',
+    role: 'Parent of a Teenlancer',
     color: '#FFD166',
-  },
-  {
-    name: 'Sneha Rao',
-    role: 'Head of Product',
-    bio: 'Designed user experiences loved by millions. Alumna of NID Ahmedabad. Obsessed with making complex things beautifully simple.',
-    icon: '🎨',
-    color: '#A78BFA',
-  },
-  {
-    name: 'Vikram Nair',
-    role: 'Head of Growth',
-    bio: 'Built TéenGro from 0 to 50L users with zero paid ads. Viral marketing wizard, content creator, and former teen entrepreneur himself.',
-    icon: '📈',
-    color: '#F472B6',
-  },
-  {
-    name: 'Meera Iyer',
-    role: 'Community Lead',
-    bio: 'Created the TéenGro community playbook. Hosts weekly sessions for our Teenlancers. Former school counsellor with a huge heart.',
-    icon: '🌟',
-    color: '#34D399',
+    initials: 'P',
   },
 ];
 
-const values = [
-  { icon: '🚀', title: 'Real Opportunities', text: 'Every project on TéenGro is from a verified company. No fake tasks, no spam — just genuine work that builds your career.' },
-  { icon: '🛡️', title: 'Safety First', text: 'Parental approvals, age verification, and a safe payment system. We protect teens at every step of their journey.' },
-  { icon: '📚', title: 'Learn While You Earn', text: 'Skill-building is baked into everything. Every project teaches you something new about the real world of work.' },
-  { icon: '💳', title: 'Instant Payments', text: 'Your money, your wallet — immediately. No delays, no excuses. Withdraw to any UPI or bank account in seconds.' },
+const steps = [
+  { icon: '🔐', title: 'Sign Up Free', desc: 'Create your Teenlancer profile in minutes. No experience needed — just your enthusiasm!' },
+  { icon: '🗂️', title: 'Pick a Project', desc: 'Browse hundreds of live projects from real companies. Choose what matches your skills.' },
+  { icon: '✅', title: 'Complete & Submit', desc: 'Follow guided steps to complete the task. Submit your work directly through the app.' },
+  { icon: '💰', title: 'Get Paid Instantly', desc: 'Money hits your wallet the moment your work is approved. Withdraw to UPI anytime.' },
 ];
 
-export default function Team() {
+export default function Home() {
   const pageRef = useFadeIn();
 
   return (
     <main ref={pageRef}>
 
-      {/* ====== TEAM HERO ====== */}
-      <section className="team-hero">
-        <span className="section-tag" style={{ background: 'rgba(255,107,53,0.2)', color: '#FFD166' }}>
-          Meet the Builders
-        </span>
-        <h1 className="section-title fade-in" style={{ marginTop: '12px' }}>
-          The People Behind<br />
-          <span>TéenGro</span>
-        </h1>
-        <p className="section-subtitle fade-in" style={{ transitionDelay: '0.1s' }}>
-          Educators, engineers, entrepreneurs, and parents — united by a single mission: 
-          to give every Indian teenager a real shot at financial independence.
-        </p>
+      {/* ====== HERO ====== */}
+      <section className="hero">
+        <div className="hero-bg-blob"></div>
+        <div className="hero-bg-blob2"></div>
+        <div className="hero-inner">
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="dot"></span>
+              As seen on Shark Tank India
+            </div>
+            <h1 className="hero-title">
+              Earn Real Money.<br />
+              Build Real Skills.<br />
+              <span className="highlight">Grow Before 18.</span>
+            </h1>
+            <p className="hero-desc">
+              India's #1 platform for teens and youth aged 14–25. Work on real projects 
+              from top brands, earn ₹50 to ₹5,000 per task, and build a portfolio 
+              that gets you ahead — no investment required.
+            </p>
+            <div className="hero-actions">
+              <a href="#" className="btn btn-primary">Start Earning Free →</a>
+              <a href="#how-it-works" className="btn btn-outline">How It Works</a>
+            </div>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <strong>50L+</strong>
+                <span>Youth Joined</span>
+              </div>
+              <div className="hero-stat">
+                <strong>200+</strong>
+                <span>Companies</span>
+              </div>
+              <div className="hero-stat">
+                <strong>12</strong>
+                <span>Categories</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <div className="floating-badge floating-badge-1">
+              🎉 <span>₹1,200 earned today!</span>
+            </div>
+            <div className="hero-card-main">
+              <div className="hero-card-label">🔥 Live Projects</div>
+              <div className="project-list">
+                {projects.map((p, i) => (
+                  <div className="project-item" key={i}>
+                    <div className="project-icon" style={{ background: p.color }}>{p.icon}</div>
+                    <div className="project-info">
+                      <div className="project-name">{p.name}</div>
+                      <div className="project-cat">{p.category}</div>
+                    </div>
+                    <div className="project-earn">{p.earn}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="floating-badge floating-badge-2">
+              ✅ <span>Approved instantly</span>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* ====== TEAM GRID ====== */}
-      <section className="team-grid-section" style={{ padding: '100px 5%' }}>
+      {/* ====== HOW IT WORKS ====== */}
+      <section className="how-it-works" id="how-it-works">
         <div className="text-center fade-in">
-          <span className="section-tag">Core Team</span>
-          <h2 className="section-title">Passionate People,<br /><span>Bold Mission</span></h2>
+          <span className="section-tag">Simple Process</span>
+          <h2 className="section-title">From Zero to Earning<br /><span>in 4 Easy Steps</span></h2>
+          <p className="section-subtitle">No experience. No investment. Just your skills and 10 minutes of your day.</p>
         </div>
-        <div className="team-grid">
-          {teamMembers.map((member, i) => (
-            <div className="team-card fade-in" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div className="team-card-header" style={{ background: `linear-gradient(135deg, ${member.color}, ${member.color}99)` }}>
-                <div className="team-avatar">{member.icon}</div>
-              </div>
-              <div className="team-card-body">
-                <div className="team-name">{member.name}</div>
-                <div className="team-role" style={{ color: member.color }}>{member.role}</div>
-                <p className="team-bio">{member.bio}</p>
-                <div className="team-social">
-                  <div className="social-btn" title="LinkedIn">in</div>
-                  <div className="social-btn" title="Twitter">𝕏</div>
-                  <div className="social-btn" title="Email">✉</div>
+        <div className="steps-grid">
+          {steps.map((step, i) => (
+            <div className="step-card fade-in" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="step-number">0{i + 1}</div>
+              <div className="step-icon">{step.icon}</div>
+              <div className="step-title">{step.title}</div>
+              <p className="step-desc">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ====== STATS ====== */}
+      <div className="stats-section">
+        <div className="stats-grid">
+          {[
+            { num: '₹2Cr+', label: 'Total Paid Out' },
+            { num: '50L+', label: 'Active Teenlancers' },
+            { num: '200+', label: 'Brand Partners' },
+            { num: '4.8★', label: 'App Rating' },
+          ].map((s, i) => (
+            <div className="stat-item fade-in" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
+              <strong>{s.num}</strong>
+              <span>{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ====== CATEGORIES ====== */}
+      <section className="categories" id="categories">
+        <div className="text-center fade-in">
+          <span className="section-tag">Explore</span>
+          <h2 className="section-title">Work in What You <span>Love</span></h2>
+          <p className="section-subtitle">12 categories, hundreds of live projects. Something for every skill, every interest.</p>
+        </div>
+        <div className="categories-grid">
+          {categories.map((cat, i) => (
+            <div className="category-card fade-in" key={i} style={{ transitionDelay: `${i * 0.07}s` }}>
+              <span className="cat-icon">{cat.icon}</span>
+              <div className="cat-name">{cat.name}</div>
+              <div className="cat-count">{cat.count}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ====== TESTIMONIALS ====== */}
+      <section className="testimonials">
+        <div className="text-center fade-in">
+          <span className="section-tag">Real Stories</span>
+          <h2 className="section-title">They Started <span>Just Like You</span></h2>
+          <p className="section-subtitle">Thousands of teens have already earned, learned, and grown. You're next.</p>
+        </div>
+        <div className="testimonials-grid">
+          {testimonials.map((t, i) => (
+            <div className="testimonial-card fade-in" key={i} style={{ transitionDelay: `${i * 0.12}s` }}>
+              <div className="testimonial-stars">{t.stars}</div>
+              <p className="testimonial-text">"{t.text}"</p>
+              <div className="testimonial-author">
+                <div className="author-avatar" style={{ background: t.color }}>{t.initials}</div>
+                <div>
+                  <div className="author-name">{t.name}</div>
+                  <div className="author-role">{t.role}</div>
                 </div>
               </div>
             </div>
@@ -114,41 +223,20 @@ export default function Team() {
         </div>
       </section>
 
-      {/* ====== VALUES ====== */}
-      <section className="values-section">
-        <div className="text-center fade-in">
-          <span className="section-tag">Our Beliefs</span>
-          <h2 className="section-title">What We Stand <span style={{ color: '#FF6B35' }}>For</span></h2>
-          <p className="section-subtitle">
-            These aren't just company values on a wall. They're the principles that guide 
-            every decision we make for our Teenlancers.
-          </p>
-        </div>
-        <div className="values-grid">
-          {values.map((v, i) => (
-            <div className="value-card fade-in" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div className="value-icon">{v.icon}</div>
-              <div className="value-title">{v.title}</div>
-              <p className="value-text">{v.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ====== JOIN CTA ====== */}
+      {/* ====== CTA ====== */}
       <section className="cta-section">
-        <span className="section-tag fade-in">We're Hiring</span>
+        <span className="section-tag fade-in">Join the Movement</span>
         <h2 className="section-title fade-in" style={{ transitionDelay: '0.1s' }}>
-          Want to Change<br />Young Lives?
+          Your First Paycheck<br />is Waiting
         </h2>
         <p className="section-subtitle fade-in" style={{ transitionDelay: '0.2s' }}>
-          Join our team of passionate builders and help us create India's most impactful 
-          youth platform. We're growing fast and looking for extraordinary people.
+          Over 50 lakh young people are already earning. Download the app and 
+          start your first project today — completely free.
         </p>
         <div className="cta-actions fade-in" style={{ transitionDelay: '0.3s' }}>
-          <a href="#" className="btn btn-primary">View Open Roles →</a>
-          <a href="#" className="btn btn-outline" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>
-            Contact Us
+          <a href="/signup" className="btn btn-primary">Download App Free →</a>
+          <a href="/about" className="btn btn-outline" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }}>
+            For Companies
           </a>
         </div>
       </section>
